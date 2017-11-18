@@ -146,8 +146,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="algorithm.h" />
     <ClInclude Include="alloc.h" />
+    <ClInclude Include="allocator.h" />
+    <ClInclude Include="construct.h" />
+    <ClInclude Include="iterator.h" />
     <ClInclude Include="type_traits.h" />
+    <ClInclude Include="uninitialized.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />

@@ -41,6 +41,17 @@ namespace HGSTL {
 		q->free_list_link = *my_free_list;
 		*my_free_list = q;
 	}
+
+
+
+	//重新分配内存空间
+	void *alloc::reallocate(void *ptr, size_t old_sz, size_t new_sz) {
+		deallocate(ptr, old_sz);
+		ptr = allocate(new_sz);
+
+		return ptr;
+	}
+
 	//返回一个大小为n的对象，并且有时候会为适当的free list增加节点
 	//假设n已经适当上调至8的倍数
 	void* alloc::refill(size_t n)
