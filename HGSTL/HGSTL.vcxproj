@@ -160,7 +160,6 @@
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="vector.cpp" />
     <ClCompile Include="VectorTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

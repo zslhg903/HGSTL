@@ -231,8 +231,7 @@ namespace HGSTL {
 
 	template<class InputIterator, class OutputIterator, class T>
 	OutputIterator _copy(InputIterator first, InputIterator last, OutputIterator result, T*) {
-
-		typedef typename _type_traits<T>::is_POD_type is_pod;
+		typedef typename __type_traits<T>::is_POD_type is_pod;
 		return __copy(first, last, result, is_pod());
 
 	}
