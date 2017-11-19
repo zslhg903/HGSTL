@@ -1,5 +1,6 @@
 #include "vector.h"
 namespace HGSTL {
+
 	template<class T,class Alloc>
 	void vector<T, Alloc>::insert_aux(iterator position, const T& x) {
 		if (finish != end_of_storage) {
@@ -57,7 +58,7 @@ namespace HGSTL {
 				iterator old_finish = finish;
 				if (elems_after > n) {
 					//“插入点之后的现有元素个数”大于“新增元素个数”
-					uninitialized_fill_n(finish - n, finish, finish);
+					uninitialized_copy(finish - n, finish, finish);
 					finish += n;
 					copy_backward(position, old_finish - n, old_finish);
 					fill(position, position + n, x_copy);//从插入点开始填入新值

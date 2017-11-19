@@ -42,6 +42,15 @@ namespace HGSTL {
 		size_type capacity() const { return size_type(end_of_storage - start); }
 		bool empty() const {return begin() == end();}
 		reference operator[](size_type n) { return *(begin() + n); }
+		bool operator==(const vector& other) const {
+			auto first1 = begin(), last1 = end();
+			auto first2 = other.begin(), last2 = other.end();
+			for (; first1 != last1&&first2 != last2; first1++, first2++) {
+				if (*first != *first2)
+					return false;
+			}
+			return (first1 == last1 && first2 == last2);
+		}
 
 		vector():start(0),finish(0),end_of_storage(0){}
 		vector(size_type n, const T& value) { fill_initialize(n, value); }
@@ -54,6 +63,13 @@ namespace HGSTL {
 			deallocate();
 		}
 
+		void swap(vector<T, Alloc> &x)
+		{
+			using std::swap;
+			swap(start, x.start);
+			swap(finish, x.finish);
+			swap(end_of_storage, x.end_of_storage);
+		}
 		reference front() { return *begin(); }
 		reference back() { return *(end() - 1); }
 		void push_back(const T& x) {
@@ -98,11 +114,18 @@ namespace HGSTL {
 		//配置空间并填满内容
 		iterator allocate_and_fill(size_type n, const T& x) {
 			iterator result = data_allocator::allocate(n);
-			uninitialized_fill_n(result, n, x);
+			HGSTL::uninitialized_fill_n(result, n, x);
 			return result;
 		}
-
-
+		
+		// 分配空间并copy一个区间的元素到新空间处  
+		template <typename ForwardIterator>
+		iterator allocate_and_copy(size_type n, ForwardIterator first, ForwardIterator last)
+		{
+			iterator result = data_allocator.allocate(n);
+			uninitialized_copy(first, last, result);
+			return result;
+		}
 
 
 

@@ -207,7 +207,7 @@ namespace HGSTL {
 	//********* [Algorithm Complexity: O(N)] ****************
 
 	template<class InputIterator, class OutputIterator>
-	OutputIterator __copy(InputIterator first, InputIterator last, OutputIterator result, _true_type) {
+	OutputIterator __copy(InputIterator first, InputIterator last, OutputIterator result, __true_type) {
 
 		auto dist = distance(first, last);
 		memcpy(result, first, sizeof(*first) * dist);
@@ -217,7 +217,7 @@ namespace HGSTL {
 	}
 
 	template<class InputIterator, class OutputIterator>
-	OutputIterator __copy(InputIterator first, InputIterator last, OutputIterator result, _false_type) {
+	OutputIterator __copy(InputIterator first, InputIterator last, OutputIterator result, __false_type) {
 
 		while (first != last) {
 			*result = *first;

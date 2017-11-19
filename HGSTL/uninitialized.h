@@ -48,12 +48,12 @@ namespace HGSTL {
 		}
 	}
 	template<class ForwardIterator,class T>
-	void uninitialized_fill(ForwardIterator first, ForwardIterator last
+	void uninitialized_fill(ForwardIterator first, ForwardIterator last,
 		const T& value) {
 		return __uninitialized_fill(first, last, value,value_type(first));
 	}
 	template<class ForwardIterator, class T,class T1>
-	void __uninitialized_fill(ForwardIterator first, ForwardIterator last
+	void __uninitialized_fill(ForwardIterator first, ForwardIterator last,
 		const T& value,T1*) {
 		typedef typename __type_traits<T>::is_POD_type is_POD;
 		return __uninitialized_fill_aux(first, last, value, is_POD());
