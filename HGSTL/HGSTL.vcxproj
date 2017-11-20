@@ -151,10 +151,15 @@
     <ClInclude Include="allocator.h" />
     <ClInclude Include="construct.h" />
     <ClInclude Include="iterator.h" />
+    <ClInclude Include="list.h" />
+    <ClInclude Include="list.impl.h" />
+    <ClInclude Include="listIterator.h" />
+    <ClInclude Include="listNode.h" />
     <ClInclude Include="TestUtil.h" />
     <ClInclude Include="type_traits.h" />
     <ClInclude Include="uninitialized.h" />
     <ClInclude Include="vector.h" />
+    <ClInclude Include="vector.impl.h" />
     <ClInclude Include="VectorTest.h" />
   </ItemGroup>
   <ItemGroup>

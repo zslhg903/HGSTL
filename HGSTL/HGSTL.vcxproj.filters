@@ -16,6 +16,9 @@
     <Filter Include="Test">
       <UniqueIdentifier>{4260338c-4640-4baf-b4a8-be92620fb196}</UniqueIdentifier>
     </Filter>
+    <Filter Include="impl">
+      <UniqueIdentifier>{66b76fa6-8c2c-4a1e-a63b-dde568859abc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alloc.h">
@@ -47,6 +50,21 @@
     </ClInclude>
     <ClInclude Include="VectorTest.h">
       <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="list.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="listNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="listIterator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="vector.impl.h">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="list.impl.h">
+      <Filter>impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

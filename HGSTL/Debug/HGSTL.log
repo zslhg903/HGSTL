@@ -1,4 +1,6 @@
-﻿  VectorTest.cpp
-d:\hgstl\hgstl\hgstl\vectortest.cpp(67): warning C4018: “<”: 有符号/无符号不匹配
+﻿  main.cpp
+  VectorTest.cpp
+d:\hgstl\hgstl\hgstl\vectortest.cpp(66): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
   HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.exe
   HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.pdb (Full PDB)
