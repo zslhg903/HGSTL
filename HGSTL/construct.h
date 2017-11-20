@@ -13,7 +13,8 @@ namespace HGSTL {
 	}
 
 	template<class ForwardIterator>
-	inline void destroy(ForwardIterator first, ForwardIterator last) {
+	inline void destroy(ForwardIterator first, ForwardIterator last) 
+	{
 		__destroy(first, last, value_type(first));
 	}
 
@@ -26,7 +27,8 @@ namespace HGSTL {
 	//如果元素的数值型别有non-trivial destructor
 	template<class ForwardIterator>
 	inline void
-		__destroy_aux(ForwardIterator first, ForwardIterator last, __false_type) {
+		__destroy_aux(ForwardIterator first, ForwardIterator last, __false_type)
+	{
 		for (; first < last; ++first)
 			destroy(&*first);
 	}

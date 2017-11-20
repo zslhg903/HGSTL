@@ -12,13 +12,15 @@ namespace HGSTL {
 	{
 		obj * volatile * my_free_list;
 		obj * result;
-		if (n > (size_t)__MAX_BYTES) {
+		if (n > (size_t)__MAX_BYTES)
+		{
 			return malloc(n);
 		}
 
 		my_free_list = free_list + FREELIST_INDEX(n);
 		result = *my_free_list;
-		if (result == 0) {
+		if (result == 0) 
+		{
 			//没找到可用的free list,准备重新填充free list
 			void *r = refill(ROUND_UP(n));
 			return r;
@@ -33,7 +35,8 @@ namespace HGSTL {
 		obj *q = (obj *)p;
 		obj * volatile * my_free_list;
 
-		if (n > (size_t)__MAX_BYTES) {
+		if (n > (size_t)__MAX_BYTES)
+		{
 			free(p);
 			return;
 		}
@@ -45,7 +48,8 @@ namespace HGSTL {
 
 
 	//重新分配内存空间
-	void *alloc::reallocate(void *ptr, size_t old_sz, size_t new_sz) {
+	void *alloc::reallocate(void *ptr, size_t old_sz, size_t new_sz) 
+	{
 		deallocate(ptr, old_sz);
 		ptr = allocate(new_sz);
 
@@ -71,7 +75,8 @@ namespace HGSTL {
 		result = (obj *)chunk;
 		*my_free_list = next_obj = (obj *)(chunk + n);
 		//以下将free list的各节点串接起来
-		for (i = 1;; i++) {	//从1开始，因为第0个将返回给客端。
+		for (i = 1;; i++) 
+		{	//从1开始，因为第0个将返回给客端。
 			current_obj = next_obj;
 			next_obj = (obj*)((char*)next_obj + n);
 			if (nobjs - 1 == i) {
@@ -92,12 +97,14 @@ namespace HGSTL {
 		size_t total_bytes = size * nobjs;//总共申请的空间大小
 		size_t bytes_left = end_free - start_free;//内存池剩余空间
 
-		if (bytes_left >= total_bytes) {
+		if (bytes_left >= total_bytes) 
+		{
 			result = start_free;
 			start_free += total_bytes;
 			return(result);
 		}
-		else if (bytes_left >= size) {
+		else if (bytes_left >= size)
+		{
 			//内存池剩余空间不能完全满足需求量，但足够供应一个（含）以上的区块
 			nobjs = bytes_left / size;
 			total_bytes = size*nobjs;
@@ -109,7 +116,8 @@ namespace HGSTL {
 			//内存池剩余空间连一个区块的大小都无法提供
 			//每次申请两倍多一些的新内存
 			size_t bytes_to_get = 2 * total_bytes + ROUND_UP(heap_size >> 4);
-			if (bytes_left > 0) {//还有零头
+			if (bytes_left > 0)
+			{//还有零头
 				obj* volatile * my_free_list = free_list + FREELIST_INDEX(bytes_left);
 				//调整free list,将内存池中的残余空间编入
 				((obj *)start_free)->free_list_link = *my_free_list;
@@ -118,7 +126,8 @@ namespace HGSTL {
 
 			//配置heap空间，用来补充内存池
 			start_free = (char*)malloc(bytes_to_get);
-			if (0 == start_free) {
+			if (0 == start_free)
+			{
 				//heap空间不足，malloc()失败
 				int i;
 				obj * volatile * my_free_list, *p;

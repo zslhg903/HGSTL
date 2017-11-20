@@ -9,7 +9,8 @@ namespace HGSTL {
 	struct random_access_iterator_tag:public bidirectional_iterator_tag{};
 	//单步向前，只读
 	template<class T,class Distance>
-	struct input_iterator {
+	struct input_iterator 
+	{
 		typedef input_iterator_tag  iterator_category;
 		typedef T					value_type;
 		typedef Distance			difference_type;
@@ -18,7 +19,8 @@ namespace HGSTL {
 	};
 	//单步向前，唯写
 	template<class T,class Distance>
-	struct output_iterator {
+	struct output_iterator 
+	{
 		typedef output_iterator_tag	iterator_category;
 		typedef void				value_type;
 		typedef void				difference_type;
@@ -27,7 +29,8 @@ namespace HGSTL {
 	};
 	//单步向前，读写
 	template<class T,class Distance>
-	struct forward_iterator {
+	struct forward_iterator 
+	{
 		typedef forward_iterator_tag	iterator_category;
 		typedef T						value_type;
 		typedef	Distance				difference_type;
@@ -36,7 +39,8 @@ namespace HGSTL {
 	};
 	//单步前后，读写
 	template<class T,class Distance>
-	struct bidirectional_iterator {
+	struct bidirectional_iterator 
+	{
 		typedef bidirectional_iterator_tag	iterator_category;
 		typedef T							value_type;
 		typedef Distance					difference_type;
@@ -45,7 +49,8 @@ namespace HGSTL {
 	};
 	//多步前后，读写
 	template<class T,class Distance>
-	struct random_access_iterator {
+	struct random_access_iterator 
+	{
 		typedef random_access_iterator_tag iterator_category;
 		typedef T							value_type;
 		typedef Distance					difference_type;
@@ -55,7 +60,8 @@ namespace HGSTL {
 
 	template<class Category,class T,class Distance=ptrdiff_t,
 	class Pointer=T*,class Reference=T&>
-	struct iterator {
+	struct iterator 
+	{
 		typedef Category	iterator_category;
 		typedef T			value_type;
 		typedef Distance	difference_type;
@@ -64,7 +70,8 @@ namespace HGSTL {
 	};
 	
 	template<class Iterator>
-	struct iterator_traits {
+	struct iterator_traits 
+	{
 		typedef typename Iterator::iterator_category	iterator_category;
 		typedef typename Iterator::value_type			value_type;
 		typedef typename Iterator::difference_type		difference_type;
@@ -75,7 +82,8 @@ namespace HGSTL {
 
 	//T为原生指针
 	template<class T>
-	struct iterator_traits<T*> {
+	struct iterator_traits<T*> 
+	{
 		typedef random_access_iterator_tag	iterator_category;
 		typedef T							value_type;
 		typedef ptrdiff_t					difference_type;
@@ -85,7 +93,8 @@ namespace HGSTL {
 	//偏特化版——当迭代器是个pointer-to-const时
 	//萃取出来的型别应该是T而非const T
 	template<class T>
-	struct iterator_traits<const T*> {
+	struct iterator_traits<const T*>
+	{
 		typedef random_access_iterator_tag	iterator_category;
 		typedef T							value_type;
 		typedef ptrdiff_t					difference_type;
@@ -95,7 +104,8 @@ namespace HGSTL {
 	//返回iterator类型，
 	template<class Iterator>
 	inline typename iterator_traits<Iterator>::iterator_category
-		iterator_category(const Iterator& It) {
+		iterator_category(const Iterator& It) 
+	{
 		typedef typename iterator_traits<Iterator>::iterator_category category;
 		return category();
 	}
@@ -103,13 +113,15 @@ namespace HGSTL {
 	//获取value_type
 	template<class Iterator>
 	inline typename iterator_traits<Iterator>::value_type*
-		value_type(const Iterator& It) {
+		value_type(const Iterator& It)
+	{
 		return static_cast<typename iterator_traits<Iterator>::value_type*>(0);
 	}
 	//获取distance_type
 	template<class Iterator>
 	inline typename iterator_traits<Iterator>::difference_type*
-		difference_type(const Iterator& It) {
+		difference_type(const Iterator& It) 
+	{
 		return static_cast<typename iterator_traits<Iterator>::difference_type*>(0);
 	}
 }

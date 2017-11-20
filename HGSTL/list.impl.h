@@ -6,7 +6,8 @@ namespace HGSTL {
 	void list<T, Alloc>::clear()
 	{
 		link_type cur = (link_type)node->next;
-		while (cur != node) {
+		while (cur != node)
+		{
 			link_type tmp = cur;
 			cur = (link_type)cur->next;
 			destroy_node(tmp);
@@ -21,7 +22,8 @@ namespace HGSTL {
 	{
 		iterator first = begin();
 		iterator last = end();
-		while (first != last) {
+		while (first != last) 
+		{
 			iterator next = first;
 			++next;
 			if (*first == value) erase(first);

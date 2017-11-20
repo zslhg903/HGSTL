@@ -10,11 +10,13 @@ namespace HGSTL {
 
 	private:
 		//ROUND_UP()将bytes上调至8的倍数
-		static size_t ROUND_UP(size_t bytes) {
+		static size_t ROUND_UP(size_t bytes) 
+		{
 			return ((bytes+__ALIGN - 1) & ~(__ALIGN - 1));
 		}
 	private:
-		union obj {				//free-lists的节点构造
+		union obj 
+		{				//free-lists的节点构造
 			union obj * free_list_link;
 			char client_data[1];
 		};
@@ -22,7 +24,8 @@ namespace HGSTL {
 		//16个free-lists
 		static obj * volatile free_list[__NFRELISTS];
 		//以下函数根据区块大小，决定使用第n号free-list.n从0起算
-		static size_t FREELIST_INDEX(size_t bytes) {
+		static size_t FREELIST_INDEX(size_t bytes) 
+		{
 			return ((bytes + __ALIGN - 1) / __ALIGN - 1);
 		}
 		//返回一个大小为n的对象，并可能加入大小为n的其它区块到free list

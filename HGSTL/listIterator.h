@@ -32,21 +32,25 @@ namespace HGSTL {
 		pointer operator->()const { return &(operator*()); }
 
 		//对迭代器累加1，就是前进一个节点
-		self& operator++() {
+		self& operator++() 
+		{
 			node = (link_type)((*node).next);
 			return *this;
 		}
-		self operator++(int) {
+		self operator++(int) 
+		{
 			self tmp = *this;
 			++*this;
 			return tmp;
 		}
 		//对迭代器递减1，就是后退一个节点
-		self& operator--() {
+		self& operator--() 
+		{
 			node = (link_type)((*node).prev);
 			return *this;
 		}
-		self operator--(int) {
+		self operator--(int) 
+		{
 			self tmp = *this;
 			--*this;
 			return tmp;

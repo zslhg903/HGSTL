@@ -28,11 +28,13 @@ namespace HGSTL {
 		
 		void insert(iterator position, size_type n, const T& x);
 	
-		void deallocate() {
+		void deallocate() 
+		{
 			if (start)
 				data_allocator::deallocate(start, end_of_storage - start);
 		}
-		void fill_initialize(size_type n, const T& value) {
+		void fill_initialize(size_type n, const T& value)
+		{
 			start = allocate_and_fill(n, value);
 			finish = start + n;
 			end_of_storage = finish;
@@ -44,17 +46,20 @@ namespace HGSTL {
 		size_type capacity() const { return size_type(end_of_storage - start); }
 		bool empty() const {return begin() == end();}
 		reference operator[](size_type n) { return *(begin() + n); }
-		bool operator==(const vector& other) const {
+		bool operator==(const vector& other) const 
+		{
 			if (size() != other.size()) return false;
 			auto first1 = begin(), last1 = end();
 			auto first2 = other.begin(), last2 = other.end();
-			for (; first1 != last1&&first2 != last2; first1++, first2++) {
+			for (; first1 != last1&&first2 != last2; first1++, first2++)
+			{
 				if (*first1 != *first2)
 					return false;
 			}
 			return true;
 		}
-		bool operator!=(const vector& other) const {
+		bool operator!=(const vector& other) const
+		{
 			return !(*this == other);
 		}
 
@@ -66,7 +71,8 @@ namespace HGSTL {
 		vector(long n, const T& value) { fill_initialize(n, value); }
 		explicit vector(size_type n) { fill_initialize(n, T()); }
 
-		~vector() {
+		~vector() 
+		{
 			destroy(start, finish);
 			deallocate();
 		}
@@ -80,8 +86,10 @@ namespace HGSTL {
 		}
 		reference front() { return *begin(); }
 		reference back() { return *(end() - 1); }
-		void push_back(const T &x) {
-			if (finish != end_of_storage) {
+		void push_back(const T &x) 
+		{
+			if (finish != end_of_storage)
+			{
 				construct(finish, x);
 				++finish;
 			}
@@ -89,12 +97,14 @@ namespace HGSTL {
 				insert_aux(end(), x);//已无备用空间，需要重新分配
 		}
 
-		void pop_back() {
+		void pop_back()
+		{
 			--finish;
 			destroy(finish);
 		}
 
-		iterator erase(iterator position) {
+		iterator erase(iterator position)
+		{
 			if (position + 1 != end())
 				copy(position + 1, finish, position);//后续元素往前移动
 			--finish;
@@ -102,25 +112,29 @@ namespace HGSTL {
 			return position;
 		}
 		//清除[first,last)中的所有元素
-		iterator erase(iterator first, iterator last) {
+		iterator erase(iterator first, iterator last) 
+		{
 			iterator i = copy(last, finish, first);
 			destroy(i, finish);
 			finish = finish - (last - first);
 			return first;
 		}
 
-		void resize(size_type new_size, const T& x) {
+		void resize(size_type new_size, const T& x) 
+		{
 			if (new_size < size())
 				erase(begin() + new_size, end());//将后续元素移除
 			else
 				insert(end(), new_size - size(), x);
 		}
+
 		void resize(size_type new_size) { resize(new_size, T()); }
 		void clear() { erase(begin(), end()); }
 
 	protected:
 		//配置空间并填满内容
-		iterator allocate_and_fill(size_type n, const T& x) {
+		iterator allocate_and_fill(size_type n, const T& x) 
+		{
 			iterator result = data_allocator::allocate(n);
 			HGSTL::uninitialized_fill_n(result, n, x);
 			return result;
