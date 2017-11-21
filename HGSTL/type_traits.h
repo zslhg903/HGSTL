@@ -131,7 +131,7 @@ namespace HGSTL {
 		typedef	__true_type		has_trivial_destructor;
 		typedef __true_type		is_POD_type;
 	}; 
-	//指针是POD类型,猪小易最可爱
+	//指针是POD类型
 	template<class T>
 	struct __type_traits<T*>
 	{
