@@ -5,16 +5,18 @@
 namespace HGSTL {
 	template<class T,class Ref,class Ptr>
 	struct __list_iterator {
-		typedef __list_iterator<T, T&, T*> iterator;
+		typedef __list_iterator<T, T&, T*> iterator; // 支持iterator_traits
 		typedef __list_iterator<T, Ref, Ptr> self;
 
-		typedef bidirectional_iterator_tag iterator_catagory;
+		typedef bidirectional_iterator_tag iterator_category;
 		typedef T value_type;
 		typedef Ptr pointer;
 		typedef Ref reference;
+		typedef ptrdiff_t difference_type;
+
 		typedef __list_node<T>* link_type;
 		typedef size_t size_type;
-		typedef ptrdiff_t difference_type;
+		
 
 		link_type node;//迭代器内部当然要有一个普通指针，指向list的节点
 

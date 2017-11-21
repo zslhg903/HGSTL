@@ -2,10 +2,11 @@
 #define _LIST_IMPL_H_
 #include "list.h"
 namespace HGSTL {
+	//清除所有节点（整个链表）
 	template<class T,class Alloc>
 	void list<T, Alloc>::clear()
 	{
-		link_type cur = (link_type)node->next;
+		link_type cur = (link_type)node->next;//node->next指向头节点
 		while (cur != node)
 		{
 			link_type tmp = cur;
@@ -17,6 +18,7 @@ namespace HGSTL {
 		node->prev = node;
 	}
 
+	//将数值为value的所有元素移除
 	template<class T,class Alloc>
 	void list<T, Alloc>::remove(const T& value)
 	{
@@ -30,6 +32,8 @@ namespace HGSTL {
 			first = next;
 		}
 	}
+
+	//移除数值相同的连续元素。注意，只有“连续而相同的元素”，才会被移除剩一个
 	template<class T,class Alloc>
 	void list<T,Alloc>::unique()
 	{
@@ -37,7 +41,8 @@ namespace HGSTL {
 		iterator last = end();
 		if (first == last) return;
 		iterator next = first;
-		while (++next != last) {
+		while (++next != last) 
+		{
 			if (*first == *next)
 				erase(next);
 			else
@@ -45,6 +50,7 @@ namespace HGSTL {
 			next = first;
 		}
 	}
+	//merge()将x合并到*this身上。两个lists的内容都必须先经过递增排序
 	template<class T,class Alloc>
 	void list<T, Alloc>::merge(list<T, Alloc>& x) 
 	{
@@ -67,10 +73,12 @@ namespace HGSTL {
 			if (first2 != last2) transfer(last1, first2, last2);
 		}
 	}
-
+	//reverse()将*this的内容逆向重置
 	template<class T,class Alloc>
 	void list<T, Alloc>::reverse()
 	{
+		//以下判断，如果是空链表，或仅有一个元素，就不进行任何操作
+		//使用size()==0||size()==1来判断，虽然也可以，但是比较慢
 		if (node->next == node || link_type(node->next)->next == node) return;
 		iterator first = begin();
 		++first;
@@ -80,11 +88,15 @@ namespace HGSTL {
 			transfer(begin(), old, first);
 		}
 	}
-
+	//list不能使用STL算法sort(),必须使用自己的sort() member function
+	//因为STL算法sort()只接受RamdonAccessIterator
+	//本函数采用quick sort
 	template<class T,class Alloc>
 	void list<T, Alloc>::sort()
 	{
 		if (node->next == node || link_type(node->next)->next == node) return;
+
+		//一些新的lists，作为中介数据存放区
 		list<T, Alloc> carry;
 		list<T, Alloc> counter[64];
 		int fill = 0;

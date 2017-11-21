@@ -9,7 +9,7 @@ namespace HGSTL {
 	template<class T,class Alloc=alloc>
 	class list {
 	protected:
-		typedef __list_node<T> list_node;
+		typedef __list_node<T> list_node;//节点类型
 		typedef simple_alloc<list_node, Alloc> list_node_allocator;
 	public:
 		typedef T value_type;
@@ -17,6 +17,8 @@ namespace HGSTL {
 		typedef value_type& reference;
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
+
+
 		typedef list_node* link_type;//节点指针
 		typedef __list_iterator<T, T&, T*>   iterator;
 	protected:
@@ -32,8 +34,8 @@ namespace HGSTL {
 			result = distance(begin(), end());
 			return result;
 		}
-		reference front() { return *begin(); }
-		reference back() { return *(--end()); }
+		reference front() { return *begin(); }//取头元素
+		reference back() { return *(--end()); }//取尾元素
 
 		list() { empty_initialize(); }//产生一个空链表
 		
@@ -48,7 +50,7 @@ namespace HGSTL {
 		}
 
 		
-
+		//在position前插入节点，data值为x，并返回新节点的迭代器
 		iterator insert(iterator position, const T& x)
 		{
 			link_type tmp = create_node(x);
@@ -58,6 +60,7 @@ namespace HGSTL {
 			position.node->prev = tmp;
 			return tmp;
 		}
+		//擦除当前迭代器所指节点，并返回指向后一个节点的的迭代器
 		iterator erase(iterator position) 
 		{
 			link_type next_node = link_type(position.node->next);
@@ -81,6 +84,7 @@ namespace HGSTL {
 			construct(&p->data, x);
 			return p;
 		}
+
 		//销毁（析构并释放）一个节点
 		void destroy_node(link_type p)
 		{
@@ -108,11 +112,14 @@ namespace HGSTL {
 				(*first.node).prev = tmp;
 			}
 		}
+		//将x接合于position所指位置之前，x必须不同于*this
 		void splice(iterator position,list& x)
 		{
 			if (!x.empty())
 				transfer(position, x.begin(), x.end());
 		}
+
+		//将i所指元素接合于position所指位置之前。position和i可指向同一个list
 		void splice(iterator position, list&, iterator i) 
 		{
 			iterator j = i;
@@ -121,6 +128,7 @@ namespace HGSTL {
 			transfer(position, i, j);
 		}
 
+		//将[first,last)内的所有元素接合于position所指位置之前
 		void splice(iterator position, list&, iterator first, iterator last)
 		{
 			if (first != last)
