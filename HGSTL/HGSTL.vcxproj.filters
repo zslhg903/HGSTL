@@ -69,6 +69,12 @@
     <ClInclude Include="dequeIterator.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="deque.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="deque.impl.h">
+      <Filter>impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp">

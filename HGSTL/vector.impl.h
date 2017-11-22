@@ -1,6 +1,5 @@
 #ifndef _VECTOR_IMPL_H_
 #define	_VECTOR_IMPL_H_
-#include "vector.h"
 namespace HGSTL {
 	template<class T,class Alloc>
 	void vector<T,Alloc>::insert_aux(iterator position, const T& x)

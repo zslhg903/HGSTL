@@ -1,6 +1,5 @@
 #ifndef _LIST_IMPL_H_
 #define _LIST_IMPL_H_
-#include "list.h"
 namespace HGSTL {
 	//清除所有节点（整个链表）
 	template<class T,class Alloc>
