@@ -19,7 +19,7 @@ namespace HGSTL {
 
 		typedef __deque_iterator self;
 
-		T* cur;	//此迭代器所指之缓冲区中的现行（current）元素
+		T* cur;	//此迭代器所指之缓冲区中的现行（current）元素（cur指向下一个元素）
 		T* first;	//此迭代器所指之缓冲区的头
 		T* last;	//此迭代器所指之缓冲区的尾（含备用空间）
 		map_pointer node;	//指向管控中心
@@ -28,7 +28,7 @@ namespace HGSTL {
 		//如果n为0，表示buffer size使用默认值，那么 
 		//	如果sz（元素大小，sizeof(value_type)）小于512，传回512/sz
 		//	如果sz不小于512，传回1
-		size_t __deque_buf_size(size_t n, size_t sz)
+		static size_t __deque_buf_size(size_t n, size_t sz)
 		{
 			return n != 0 ? n : (sz < 512 ? size_t(512 / sz) : size_t(1));
 		}
@@ -48,7 +48,7 @@ namespace HGSTL {
 			return difference_type(buffer_size())*(node - x.node - 1) +
 				(cur - first) + (x.last - x.cur);
 		}
-
+		//++i
 		self& operator++()
 		{
 			++cur;
@@ -59,12 +59,14 @@ namespace HGSTL {
 			}
 			return *this;
 		}
+		//i++
 		self operator++(int)
 		{
 			self tmp = *this;
 			++*this;
 			return tmp;
 		}
+		//--i
 		self& operator--()
 		{
 			if (cur == first)
@@ -75,10 +77,11 @@ namespace HGSTL {
 			--cur;
 			return *this;
 		}
+		//i--
 		self operator--(int)
 		{
 			self tmp = *this;
-			--*this;
+			--*this;//调用--i
 			return tmp;
 		}
 		//实现随机存取。迭代器可以直接跳跃n个距离
@@ -92,7 +95,8 @@ namespace HGSTL {
 			{
 				//标的位置不在同一缓冲区
 				difference_type node_offset =
-					offset > 0 ? offset / difference_type(buffer_size());
+					offset > 0 ? offset / difference_type(buffer_size())
+					: -difference_type((-offset - 1) / buffer_size()) - 1;
 				//切换至正确的节点（亦即缓冲区）
 				set_node(node + node_offset);
 				//切换至正确的元素

@@ -24,7 +24,6 @@ namespace HGSTL {
 	protected:
 		link_type node;//只要一个指针，便可表示整个环状双向链表
 	public:
-		
 		iterator begin() { return (link_type)((*node).next); }
 		iterator end() { return node; }
 		bool empty()const { return node->next == node; }
@@ -38,7 +37,12 @@ namespace HGSTL {
 		reference back() { return *(--end()); }//取尾元素
 
 		list() { empty_initialize(); }//产生一个空链表
-		
+		~list()
+		{
+			clear();
+			erase(end());
+		}
+
 		void push_front(const T& x) { insert(begin(), x);}
 		void push_back(const T& x) { insert(end(), x); }
 
@@ -112,6 +116,8 @@ namespace HGSTL {
 				(*first.node).prev = tmp;
 			}
 		}
+
+	public:
 		//将x接合于position所指位置之前，x必须不同于*this
 		void splice(iterator position,list& x)
 		{

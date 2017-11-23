@@ -95,13 +95,13 @@ namespace HGSTL {
 	template <class RandomAccessIterator, class Distance, class T>
 	inline void __push_heap_aux(RandomAccessIterator first, RandomAccessIterator last,
 		Distance *, T*) {
-		EasySTL::__push_heap(first, Distance((last - first) - 1), Distance(0), T(*(last - 1)));
+		HGSTL::__push_heap(first, Distance((last - first) - 1), Distance(0), T(*(last - 1)));
 	}
 
 	template <class RandomAccessIterator>
 	inline void push_heap(RandomAccessIterator first, RandomAccessIterator last) {
 		//新元素已经位于底部容器的最尾端
-		EasySTL::__push_heap_aux(first, last, difference_type(first), value_type(first));
+		HGSTL::__push_heap_aux(first, last, difference_type(first), value_type(first));
 	}
 
 	//********** [pop_heap] ******************************
@@ -124,24 +124,24 @@ namespace HGSTL {
 			*(first + holeIndex) = *(first + (secondChild - 1));
 			holeIndex = secondChild - 1;
 		}
-		EasySTL::__push_heap(first, holeIndex, topIndex, value);
+		HGSTL::__push_heap(first, holeIndex, topIndex, value);
 	}
 
 	template <class RandomAccessIterator, class T, class Distance>
 	inline void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,
 		RandomAccessIterator result, T value, Distance*) {
 		*result = *first;
-		EasySTL::__adjust_heap(first, Distance(0), Distance(last - first), value);//value 暂时保存
+		HGSTL::__adjust_heap(first, Distance(0), Distance(last - first), value);//value 暂时保存
 	}
 
 	template<class RandomAccessIterator, class T>
 	inline void __pop_heap_aux(RandomAccessIterator first, RandomAccessIterator last, T*) {
-		EasySTL::__pop_heap(first, last - 1, last - 1, T(*(last - 1)), difference_type(first));
+		HGSTL::__pop_heap(first, last - 1, last - 1, T(*(last - 1)), difference_type(first));
 	}
 
 	template<class RandomAccessIterator>
 	inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last) {
-		EasySTL::__pop_heap_aux(first, last, value_type(first));
+		HGSTL::__pop_heap_aux(first, last, value_type(first));
 	}
 
 	//********** [pop_heap] ******************************
@@ -152,7 +152,7 @@ namespace HGSTL {
 		Distance len = last - first;
 		Distance parent = (len - 2) / 2;
 		while (true) {//调整整个树的所有父节点
-			EasySTL::__adjust_heap(first, parent, len, T(*(first + parent)));
+			HGSTL::__adjust_heap(first, parent, len, T(*(first + parent)));
 			if (parent == 0) return;
 			parent--;
 		}
@@ -160,7 +160,7 @@ namespace HGSTL {
 
 	template<class RandomIterator>
 	inline void make_heap(RandomIterator first, RandomIterator last) {
-		EasySTL::__make_heap(first, last, value_type(first), difference_type(first));
+		HGSTL::__make_heap(first, last, value_type(first), difference_type(first));
 	}
 
 
@@ -206,7 +206,7 @@ namespace HGSTL {
 
 	//********* [Algorithm Complexity: O(N)] ****************
 
-	template<class InputIterator, class OutputIterator>
+	template<class InputIterator, class OutputIterator>//p321
 	OutputIterator __copy(InputIterator first, InputIterator last, OutputIterator result, __true_type) {
 
 		auto dist = distance(first, last);
@@ -235,15 +235,93 @@ namespace HGSTL {
 		return __copy(first, last, result, is_pod());
 
 	}
-
+	//完全泛化版本
 	template <class InputIterator, class OutputIterator>
-	OutputIterator copy(InputIterator first, InputIterator last, OutputIterator result) {
+	inline OutputIterator copy(InputIterator first, InputIterator last, OutputIterator result) {
 
-		return _copy(first, last, result, value_type(first));
-
+		//return _copy(first, last, result, value_type(first));
+		return __copy_dispath<InputIterator, OutputIterator>()(first, last, result);
 	}
 
-	template <class InputIterator, class OutputIterator>
+	//特殊版本（1）。重载形式
+	inline char* copy(const char* first, const char* last, char* result)
+	{
+		memmove(result, first, last - first);
+		return result + (last - first);
+	}
+	//特殊版本（2）。重载形式
+	inline wchar_t* copy(const wchar_t* first, const wchar_t* last, wchar_t* result)
+	{
+		memmove(result, first, sizeof(wchar_t)*(last - first));
+		return result + (last - first);
+	}
+	//
+	template<class InputIterator,class OutputIterator>
+	struct __copy_dispath
+	{
+		OutputIterator operator()(InputIterator first, InputIterator last, OutputIterator result)
+		{
+			return __copy(first, last, result, iterator_category(first));
+		}
+	};
+	//偏特化版本（1），两个参数都是T*指针形式
+	template<class T>
+	struct __copy_dispatch<T*, T*>
+	{
+		T* operator()(T* first, T* last, T* result)
+		{
+			typedef typename __type_traits<T>::has_trivial_assignment_operator t;
+			return __copy_t(first, last, result, t());
+		}
+	};
+	//偏特化版本（2），第一个参数为const T*指针形式，第二参数为T*指针形式
+	template<class T>
+	struct __copy_dispath<const T*, T*>
+	{
+		T* operator()(const T* frist, const T* last, T* result)
+		{
+			typedef typename __type_traits<T>::has_trivial_assignment_operator t;
+			return __copy_t(first, last, result, t());
+		}
+	};
+
+	template<class InputIterator,class OutputIterator>
+	inline OutputIterator __copy(InputIterator first, InputIterator last, OutputIterator result, input_iterator_tag)
+	{
+		for (; first != last; ++result, ++first)
+			*result = *first;
+		return result;
+	}
+
+	template<class RandomAccessIterator,class OutputIterator>
+	inline OutputIterator __copy(RandomAccessIterator first, RandomAccessIterator last, OutputIterator result, random_access_iterator_tag)
+	{
+		return __copy_d(first, last, result, distance_type(first));
+	}
+
+	template<class RandomAccessIterator,class OutputIterator,class Distance>
+	inline OutputIterator __copy_d(RandomAccessIterator first, RandomAccessIterator last, OutputIterator result, Distance *)
+	{
+		for (Distance n = last - first; n > 0; --n, ++result, ++first)
+			*result = *first;
+		return result;
+	}
+
+	template<class T>
+	inline T* __copy_t(const T* first, const T* last, T* result, __true_type)
+	{
+		memmove(result, first, sizeof(T)*(last - first));
+		return result + (last - first);
+	}
+
+	template<class T>
+	inline T* __copy_t(const T* first, const T* last, T* result, __false_type)
+	{
+		return __copy_d(first, last, result, (ptrdiff_t*)0);
+	}
+
+	//////////////
+	/*template <class InputIterator, class OutputIterator>
 	OutputIterator copy_backward(InputIterator first, InputIterator last, OutputIterator result) {
 
 		OutputIterator new_result = result - (last - first);
@@ -267,7 +345,7 @@ namespace HGSTL {
 		memcpy(result, first, sizeof(*first) * dist);
 		return result + dist;
 
-	}
+	}*/
 	template <class T1, class T2>
 	T1 max(T1 a, T2 b) {
 		return a > b ? a : b;

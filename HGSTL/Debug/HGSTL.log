@@ -1,4 +1,90 @@
-﻿  alloc.cpp
+﻿  DequeTest.cpp
+d:\hgstl\hgstl\hgstl\dequetest.cpp(9): warning C4018: “<”: 有符号/无符号不匹配
+d:\hgstl\hgstl\hgstl\dequetest.cpp(11): warning C4018: “<”: 有符号/无符号不匹配
+d:\hgstl\hgstl\hgstl\deque.h(109): warning C4018: “<”: 有符号/无符号不匹配
+  d:\hgstl\hgstl\hgstl\deque.h(105): note: 编译类 模板 成员函数“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::erase(HGSTL::__deque_iterator<T,T &,T *,0>)”时
+          with
+          [
+              T=int
+          ]
+  d:\hgstl\hgstl\hgstl\dequetest.cpp(81): note: 参见对正在编译的函数 模板 实例化“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::erase(HGSTL::__deque_iterator<T,T &,T *,0>)”的引用
+          with
+          [
+              T=int
+          ]
+  d:\hgstl\hgstl\hgstl\dequetest.cpp(6): note: 参见对正在编译的类 模板 实例化“HGSTL::deque<int,HGSTL::alloc,0>”的引用
+d:\hgstl\hgstl\hgstl\deque.impl.h(142): warning C4018: “<”: 有符号/无符号不匹配
+  d:\hgstl\hgstl\hgstl\deque.impl.h(132): note: 编译类 模板 成员函数“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::erase(HGSTL::__deque_iterator<T,T &,T *,0>,HGSTL::__deque_iterator<T,T &,T *,0>)”时
+          with
+          [
+              T=int
+          ]
+  d:\hgstl\hgstl\hgstl\dequetest.cpp(91): note: 参见对正在编译的函数 模板 实例化“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::erase(HGSTL::__deque_iterator<T,T &,T *,0>,HGSTL::__deque_iterator<T,T &,T *,0>)”的引用
+          with
+          [
+              T=int
+          ]
+d:\hgstl\hgstl\hgstl\deque.impl.h(170): warning C4018: “<”: 有符号/无符号不匹配
+  d:\hgstl\hgstl\hgstl\deque.impl.h(167): note: 编译类 模板 成员函数“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::insert_aux(HGSTL::__deque_iterator<T,T &,T *,0>,const int &)”时
+          with
+          [
+              T=int
+          ]
+  d:\hgstl\hgstl\hgstl\deque.h(139): note: 参见对正在编译的函数 模板 实例化“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::insert_aux(HGSTL::__deque_iterator<T,T &,T *,0>,const int &)”的引用
+          with
+          [
+              T=int
+          ]
+d:\hgstl\hgstl\hgstl\deque.h(180): warning C4018: “>”: 有符号/无符号不匹配
+  d:\hgstl\hgstl\hgstl\deque.h(179): note: 编译类 模板 成员函数“void HGSTL::deque<int,HGSTL::alloc,0>::reserve_map_at_front(HGSTL::deque<int,HGSTL::alloc,0>::std::size_type)”时
+  d:\hgstl\hgstl\hgstl\deque.impl.h(51): note: 参见对正在编译的函数 模板 实例化“void HGSTL::deque<int,HGSTL::alloc,0>::reserve_map_at_front(HGSTL::deque<int,HGSTL::alloc,0>::std::size_type)”的引用
+d:\hgstl\hgstl\hgstl\algorithm.h(273): warning C4018: “>”: 有符号/无符号不匹配
+  d:\hgstl\hgstl\hgstl\deque.impl.h(21): note: 参见对正在编译的函数 模板 实例化“T1 HGSTL::max<int,HGSTL::deque<int,HGSTL::alloc,0>::std::size_type>(T1,std::T2)”的引用
+          with
+          [
+              T1=int,
+              T2=HGSTL::deque<int,HGSTL::alloc,0>::std::size_type
+          ]
+  d:\hgstl\hgstl\hgstl\deque.impl.h(18): note: 编译类 模板 成员函数“void HGSTL::deque<int,HGSTL::alloc,0>::create_map_and_nodes(HGSTL::deque<int,HGSTL::alloc,0>::std::size_type)”时
+  d:\hgstl\hgstl\hgstl\deque.impl.h(9): note: 参见对正在编译的函数 模板 实例化“void HGSTL::deque<int,HGSTL::alloc,0>::create_map_and_nodes(HGSTL::deque<int,HGSTL::alloc,0>::std::size_type)”的引用
+  d:\hgstl\hgstl\hgstl\deque.impl.h(111): note: 编译类 模板 成员函数“void HGSTL::deque<int,HGSTL::alloc,0>::clear(void)”时
+  d:\hgstl\hgstl\hgstl\dequetest.cpp(62): note: 参见对正在编译的函数 模板 实例化“void HGSTL::deque<int,HGSTL::alloc,0>::clear(void)”的引用
+d:\hgstl\hgstl\hgstl\algorithm.h(213): error C2664: “void *memcpy(void *,const void *,std::size_t)”: 无法将参数 1 从“HGSTL::__deque_iterator<T,T &,T *,0>”转换为“void *”
+          with
+          [
+              T=int
+          ]
+  d:\hgstl\hgstl\hgstl\algorithm.h(213): note: 没有可用于执行该转换的用户定义的转换运算符，或者无法调用该运算符
+  d:\hgstl\hgstl\hgstl\algorithm.h(235): note: 参见对正在编译的函数 模板 实例化“OutputIterator HGSTL::__copy<InputIterator,OutputIterator>(InputIterator,InputIterator,OutputIterator,HGSTL::__true_type)”的引用
+          with
+          [
+              OutputIterator=HGSTL::__deque_iterator<int,int &,int *,0>,
+              InputIterator=HGSTL::__deque_iterator<int,int &,int *,0>
+          ]
+  d:\hgstl\hgstl\hgstl\algorithm.h(250): note: 参见对正在编译的函数 模板 实例化“OutputIterator HGSTL::_copy<InputIterator,OutputIterator,int>(InputIterator,InputIterator,OutputIterator,T *)”的引用
+          with
+          [
+              OutputIterator=HGSTL::__deque_iterator<int,int &,int *,0>,
+              InputIterator=HGSTL::__deque_iterator<int,int &,int *,0>,
+              T=int
+          ]
+  d:\hgstl\hgstl\hgstl\deque.h(111): note: 参见对正在编译的函数 模板 实例化“OutputIterator HGSTL::copy_backward<HGSTL::__deque_iterator<T,T &,T *,0>,HGSTL::__deque_iterator<T,T &,T *,0>>(InputIterator,InputIterator,OutputIterator)”的引用
+          with
+          [
+              OutputIterator=HGSTL::__deque_iterator<int,int &,int *,0>,
+              T=int,
+              InputIterator=HGSTL::__deque_iterator<int,int &,int *,0>
+          ]
+  d:\hgstl\hgstl\hgstl\deque.h(105): note: 编译类 模板 成员函数“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::erase(HGSTL::__deque_iterator<T,T &,T *,0>)”时
+          with
+          [
+              T=int
+          ]
+  d:\hgstl\hgstl\hgstl\dequetest.cpp(81): note: 参见对正在编译的函数 模板 实例化“HGSTL::__deque_iterator<T,T &,T *,0> HGSTL::deque<T,HGSTL::alloc,0>::erase(HGSTL::__deque_iterator<T,T &,T *,0>)”的引用
+          with
+          [
+              T=int
+          ]
   正在生成代码...
   正在编译...
   VectorTest.cpp
@@ -7,5 +93,3 @@ d:\hgstl\hgstl\hgstl\vectortest.cpp(66): warning C4018: “<”: 有符号/无�
   正在编译...
   main.cpp
   正在生成代码...
-  HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.exe
-  HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.pdb (Full PDB)

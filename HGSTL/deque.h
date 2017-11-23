@@ -3,8 +3,8 @@
 #include"dequeIterator.h"
 #include"allocator.h"
 #include"construct.h"
-enum {_min_map_num=8};
 namespace HGSTL {
+	enum { _min_map_num = 8 };
 	template<class T,class Alloc=alloc,size_t BufSize=0>
 	class deque {
 	public:
@@ -12,6 +12,7 @@ namespace HGSTL {
 		typedef value_type* pointer;
 		typedef value_type& reference;
 		typedef size_t size_type;
+		typedef ptrdiff_t difference_type;
 
 		typedef __deque_iterator<T, T&, T*, BufSize> iterator;
 
@@ -27,9 +28,14 @@ namespace HGSTL {
 		typedef simple_alloc<value_type, Alloc> data_allocator;
 		typedef simple_alloc<pointer, Alloc>	map_allocator;
 	public:
-		deque(int n, const reference value) :start(), finish(), map(0), map_size(0)
+		deque(int n, const value_type& value) :start(), finish(), map(0), map_size(0)
 		{
 			fill_initialize(n, value);
+		}
+		~deque()
+		{
+			destroy(start, finish);
+			destroy_map_and_nodes();
 		}
 	public:
 		iterator begin() { return start; }
@@ -46,23 +52,24 @@ namespace HGSTL {
 			--tmp;	//调用__deque_iterator<>::operator--
 			return *tmp;//调用__deque_iterator<>::operator*
 		}
-		size_type size() const { return finish - start;; }
+		size_type size() const { return finish - start; }
 
 		size_type max_size() const { return size_type(-1); }
 		bool empty() const { return finish == start; }
+		void clear();
+		
 
-
-		void push_back(const reference t)
+		void push_back(const value_type& t)
 		{
-			if (finish.cur != finish.last - 1)
+			if (finish.cur != finish.last - 1)//最后缓冲区尚有两个（含）以上的元素备用空间
 			{
-				construct(finish.cur, t);
-				++finish.cur;
+				construct(finish.cur, t);//直接在备用空间上构造元素
+				++finish.cur;	//调整最后缓冲区的使用状态
 			}
 			else
 				push_back_aux(t);
 		}
-		void push_front(const reference t)
+		void push_front(const value_type& t)
 		{
 			if (start.cur != start.first)
 			{
@@ -82,7 +89,7 @@ namespace HGSTL {
 			}
 			else
 				pop_back_aux();
-		}
+		} 
 
 		void pop_front()
 		{
@@ -111,8 +118,9 @@ namespace HGSTL {
 			}
 			return start + index;
 		}
+		iterator erase(iterator first, iterator last);
 
-		iterator insert(iterator position, const reference x)
+		iterator insert(iterator position, const value_type& x)
 		{
 			if (position.cur == start.cur)
 			{
@@ -133,18 +141,19 @@ namespace HGSTL {
 		}
 
 	protected:
-		void fill_initialize(size_type, const reference);
+		void fill_initialize(size_type, const value_type&);
 		void create_map_and_nodes(size_type);
-		void push_back_aux(const reference);
-		void push_front_aux(const reference);
+		void push_back_aux(const value_type&);
+		void push_front_aux(const value_type&);
 		void reallocate_map(size_type nodes_to_add, bool add_at_front);
 		void pop_back_aux(); //finish.cur == finish.first 释放该缓冲区
 		void pop_front_aux();
-		void clear();
-		iterator erase(iterator first, iterator last);
-		iterator insert_aux(iterator pos, const reference x);
+		void destroy_map_and_nodes();
+		
+		
+		iterator insert_aux(iterator pos, const value_type& x);
 
-		static size_t buffer_size() { return _deque_buf_size(BufSize, sizeof(T)); }
+		static size_t buffer_size() { return __deque_buf_size(BufSize, sizeof(T)); }
 		static size_t __deque_buf_size(size_t n, size_t sz) 
 		{
 			return n != 0 ? n : (sz < 512 ? size_t(512 / sz) : size_t(1));

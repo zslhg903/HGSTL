@@ -16,12 +16,12 @@ namespace HGSTL {
 		template<class T>
 		using tsVec = HGSTL::vector<T>;
 		void testCase1();
-		/*void testCase2();
+		void testCase2();
 		void testCase3();
 		void testCase4();
 		void testCase5();
 		void testCase6();
-		void testCase7();
+		/*void testCase7();
 		void testCase8();
 		void testCase9();
 		void testCase10();*/

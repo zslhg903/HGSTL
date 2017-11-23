@@ -4,7 +4,7 @@
 #include"deque.h"
 namespace HGSTL {
 	template<class T,class Alloc,size_t BufSize>
-	void deque<T, Alloc, BufSize>::fill_initialize(size_type n, const reference value)
+	void deque<T, Alloc, BufSize>::fill_initialize(size_type n, const value_type& value)
 	{
 		create_map_and_nodes(n);
 		map_pointer cur;
@@ -34,21 +34,21 @@ namespace HGSTL {
 		finish.cur = finish.first + num_elements%buffer_size();
 	}
 	template<class T, class Alloc, size_t BufSize>
-	void deque<T, Alloc, BufSize>::push_back_aux(const reference t)
+	void deque<T, Alloc, BufSize>::push_back_aux(const value_type& t)
 	{
 		value_type t_copy = t;
-		reserve_map_at_back();
-		*(finish.node + 1) = allocate_node();
+		reserve_map_at_back();//若符合某种条件则必须重换一个map
+		*(finish.node + 1) = allocate_node();//配置一个新节点（缓冲区）
 
 		construct(finish.cur, t_copy);
 		finish.set_node(finish.node + 1);
 		finish.cur = finish.first;
 	}
 	template<class T, class Alloc, size_t BufSize>
-	void deque<T, Alloc, BufSize>::push_front_aux(const reference t)
+	void deque<T, Alloc, BufSize>::push_front_aux(const value_type& t)
 	{
 		value_type t_copy = t;
-		reserve_map_at_front();
+		reserve_map_at_front();//若符合某种条件则必须重换一个map
 		*(start.node - 1) = allocate_node();
 		
 		start.set_node(start.node - 1);
@@ -73,16 +73,18 @@ namespace HGSTL {
 		else
 		{
 			size_type new_map_size = map_size + max(map_size, nodes_to_add) + 2;
-
+			//配置一块空间，准备给新map使用
 			map_pointer new_map = map_allocator::allocate(new_map_size);
-			new_nstart new_map + (new_map_size - new_num_nodes) / 2 + (add_at_front ? nodes_to_add : 0);
-
+			new_nstart = new_map + (new_map_size - new_num_nodes) / 2 + (add_at_front ? nodes_to_add : 0);
+			//把原map内容拷贝过来
 			copy(start.node, finish.node + 1, new_nstart);
+			//释放原map
 			map_allocator::deallocate(map, map_size);
-
+			//设定新map的起始地址与大小
 			map = new_map;
-			map_size = new_map_size();
+			map_size = new_map_size;
 
+			//重新设定迭代器start和finish
 			start.set_node(new_nstart);
 			finish.set_node(new_nstart + old_num_nodes - 1);
 		}
@@ -90,7 +92,7 @@ namespace HGSTL {
 	template<class T, class Alloc, size_t BufSize>
 	void deque<T, Alloc, BufSize>::pop_back_aux()
 	{
-		deallocate_node(finish.first);
+		deallocate_node(finish.first);//释放最后一个缓冲区
 		finish.set_node(finish.node - 1);
 		finish.cur = finish.last - 1;
 		destroy(finish.cur);
@@ -161,7 +163,7 @@ namespace HGSTL {
 
 	template<class T,class Alloc,size_t BufSize>
 	typename deque<T,Alloc,BufSize>::iterator 
-		deque<T, Alloc, BufSize>::insert_aux(iterator pos, const reference x)
+		deque<T, Alloc, BufSize>::insert_aux(iterator pos, const value_type& x)
 	{
 		difference_type index = pos - start;
 		value_type x_copy = x;
@@ -189,6 +191,14 @@ namespace HGSTL {
 		}
 		*pos = x_copy;
 		return pos;
+	}
+
+	template<class T,class Alloc,size_t BufSize>
+	void deque<T, Alloc, BufSize>::destroy_map_and_nodes()
+	{
+		for (map_pointer cur = start.node; cur <= finish.node; ++cur)
+			deallocate_node(*cur);
+		map_allocator::deallocate(map, map_size);
 	}
 }
 

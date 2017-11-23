@@ -153,11 +153,13 @@
     <ClInclude Include="deque.h" />
     <ClInclude Include="deque.impl.h" />
     <ClInclude Include="dequeIterator.h" />
+    <ClInclude Include="DequeTest.h" />
     <ClInclude Include="iterator.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="list.impl.h" />
     <ClInclude Include="listIterator.h" />
     <ClInclude Include="listNode.h" />
+    <ClInclude Include="ListTest.h" />
     <ClInclude Include="TestUtil.h" />
     <ClInclude Include="type_traits.h" />
     <ClInclude Include="uninitialized.h" />
@@ -167,6 +169,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
+    <ClCompile Include="DequeTest.cpp" />
+    <ClCompile Include="ListTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="VectorTest.cpp" />
   </ItemGroup>
