@@ -7,7 +7,7 @@
 namespace HGSTL {
 	namespace ListTest {
 		template<class T>
-		using tsList = HGSTL::List<T>;
+		using tsList = HGSTL::list<T>;
 		template<class T>
 		using stdList = std::list<T>;
 

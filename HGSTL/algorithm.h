@@ -43,42 +43,42 @@ namespace HGSTL {
 		return first + n;
 	}
 
-	//********** [distance] ******************************
+	////********** [distance] ******************************
 
-	//********* [Algorithm Complexity: O(N)] ****************
+	////********* [Algorithm Complexity: O(N)] ****************
 
-	template<class InputIterator>
-	typename iterator_traits<InputIterator>::difference_type
+	//template<class InputIterator>
+	//typename iterator_traits<InputIterator>::difference_type
 
-		_distance(InputIterator first, InputIterator last, input_iterator_tag) {
-		typename iterator_traits<InputIterator>::difference_type dist = 0;
-		while (first++ != last) {
-			++dist;
-		}
+	//	_distance(InputIterator first, InputIterator last, input_iterator_tag) {
+	//	typename iterator_traits<InputIterator>::difference_type dist = 0;
+	//	while (first++ != last) {
+	//		++dist;
+	//	}
 
-		return dist;
+	//	return dist;
 
-	}
+	//}
 
-	template<class RandomIterator>
-	typename iterator_traits<RandomIterator>::difference_type
+	//template<class RandomIterator>
+	//typename iterator_traits<RandomIterator>::difference_type
 
-		_distance(RandomIterator first, RandomIterator last, random_access_iterator_tag) {
+	//	_distance(RandomIterator first, RandomIterator last, random_access_iterator_tag) {
 
-		auto dist = last - first;
+	//	auto dist = last - first;
 
-		return dist;
+	//	return dist;
 
-	}
+	//}
 
-	template<class Iterator>
-	typename iterator_traits<Iterator>::difference_type
+	//template<class Iterator>
+	//typename iterator_traits<Iterator>::difference_type
 
-		distance(Iterator first, Iterator last) {
-		typedef typename iterator_traits<Iterator>::iterator_category iterator_category;
-		return _distance(first, last, iterator_category());
+	//	distance(Iterator first, Iterator last) {
+	//	typedef typename iterator_traits<Iterator>::iterator_category iterator_category;
+	//	return _distance(first, last, iterator_category());
 
-	}
+	//}
 
 	//********** [push_heap] ******************************
 	template <class RandomAccessIterator, class Distance, class T>
@@ -205,7 +205,7 @@ namespace HGSTL {
 	//********** [copy] ******************************
 
 	//********* [Algorithm Complexity: O(N)] ****************
-
+	/*
 	template<class InputIterator, class OutputIterator>//p321
 	OutputIterator __copy(InputIterator first, InputIterator last, OutputIterator result, __true_type) {
 
@@ -234,13 +234,14 @@ namespace HGSTL {
 		typedef typename __type_traits<T>::is_POD_type is_pod;
 		return __copy(first, last, result, is_pod());
 
-	}
+	}*/
+
 	//完全泛化版本
 	template <class InputIterator, class OutputIterator>
 	inline OutputIterator copy(InputIterator first, InputIterator last, OutputIterator result) {
 
 		//return _copy(first, last, result, value_type(first));
-		return __copy_dispath<InputIterator, OutputIterator>()(first, last, result);
+		return __copy_dispatch<InputIterator, OutputIterator>()(first, last, result);
 	}
 
 	//特殊版本（1）。重载形式
@@ -257,7 +258,7 @@ namespace HGSTL {
 	}
 	//
 	template<class InputIterator,class OutputIterator>
-	struct __copy_dispath
+	struct __copy_dispatch
 	{
 		OutputIterator operator()(InputIterator first, InputIterator last, OutputIterator result)
 		{
@@ -276,7 +277,7 @@ namespace HGSTL {
 	};
 	//偏特化版本（2），第一个参数为const T*指针形式，第二参数为T*指针形式
 	template<class T>
-	struct __copy_dispath<const T*, T*>
+	struct __copy_dispatch<const T*, T*>
 	{
 		T* operator()(const T* frist, const T* last, T* result)
 		{
@@ -320,16 +321,19 @@ namespace HGSTL {
 		return __copy_d(first, last, result, (ptrdiff_t*)0);
 	}
 
+
+
 	//////////////
-	/*template <class InputIterator, class OutputIterator>
+	template <class InputIterator, class OutputIterator>
 	OutputIterator copy_backward(InputIterator first, InputIterator last, OutputIterator result) {
 
 		OutputIterator new_result = result - (last - first);
-		return _copy(first, last, new_result, value_type(first));
+		return __copy(first, last,new_result, iterator_category(first));
 
 	}
 
-	template<>
+
+	/*template<>
 	inline char *copy(char *first, char *last, char *result) {
 
 		auto dist = last - first;

@@ -120,9 +120,36 @@ namespace HGSTL {
 	//ªÒ»°distance_type
 	template<class Iterator>
 	inline typename iterator_traits<Iterator>::difference_type*
-		difference_type(const Iterator& It) 
+		distance_type(const Iterator& It)
 	{
 		return static_cast<typename iterator_traits<Iterator>::difference_type*>(0);
+	}
+	//distance
+	template<class InputIterator>
+	inline typename iterator_traits<InputIterator>::difference_type
+		distance(InputIterator first, InputIterator last)
+	{
+		typedef typename iterator_traits<InputIterator>::iterator_category category;
+		return __distance(first, last, category());
+	}
+	template<class InputIterator>
+	inline typename iterator_traits<InputIterator>::difference_type
+		__distance(InputIterator first, InputIterator last, input_iterator_tag)
+	{
+		iterator_traits<InputIterator>::difference_type n = 0;
+		while (first != last)
+		{
+			++first;
+			++n;
+		}
+		return n;
+	}
+
+	template<class RandomAccessIterator>
+	inline typename iterator_traits<RandomAccessIterator>::difference_type
+		__distance(RandomAccessIterator first, RandomAccessIterator last, random_access_iterator_tag)
+	{
+		return last - first;
 	}
 }
 #endif // !_ITERATOR_H_

@@ -105,7 +105,8 @@ namespace HGSTL {
 		void testAllCases()
 		{
 			testCase1();
-			//testCase2();
+			testCase2();
+			std::cout << "deque OK" << std::endl;
 		}
 	}
 }

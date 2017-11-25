@@ -91,7 +91,7 @@ namespace HGSTL {
 			testCase4();
 			testCase5();
 			testCase6();
-			
+			std::cout << "vector OK" << std::endl;
 			
 		}
 	}

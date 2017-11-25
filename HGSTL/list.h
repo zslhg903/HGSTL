@@ -24,19 +24,31 @@ namespace HGSTL {
 	protected:
 		link_type node;//只要一个指针，便可表示整个环状双向链表
 	public:
-		iterator begin() { return (link_type)((*node).next); }
-		iterator end() { return node; }
+		list<T>& operator= (const list& l) {
+			if (this != &l) {
+				list(l).swap(*this);
+			}
+			return *this;
+		}
+		iterator begin()const { return (link_type)node->next; }
+		iterator end()const { return node; }
 		bool empty()const { return node->next == node; }
-		size_type size()const 
+		size_type size() const
 		{
 			size_type result = 0;
-			result = distance(begin(), end());
+			result=distance(begin(), end());
 			return result;
 		}
 		reference front() { return *begin(); }//取头元素
 		reference back() { return *(--end()); }//取尾元素
 
 		list() { empty_initialize(); }//产生一个空链表
+
+		list(const list& l):list()
+		{
+			for (iterator it = l.begin(); it != l.end(); it++)
+				push_back(it.node->data);
+		}
 		~list()
 		{
 			clear();
@@ -54,6 +66,13 @@ namespace HGSTL {
 		}
 
 		
+		void swap(list& x) 
+		{
+			link_type tmp = x.node;
+			x.node = this->node;
+			this->node = tmp;
+		}
+
 		//在position前插入节点，data值为x，并返回新节点的迭代器
 		iterator insert(iterator position, const T& x)
 		{
@@ -79,7 +98,7 @@ namespace HGSTL {
 		//配置一个节点并返回
 		link_type get_node() { return list_node_allocator::allocate(); }
 		//释放一个节点
-		void put_node(link_type p) { list_node_allocator::deaalocate(p); }
+		void put_node(link_type p) { list_node_allocator::deallocate(p); }
 
 		//产生（配置并构造）一个节点，带有元素值
 		link_type create_node(const T& x)

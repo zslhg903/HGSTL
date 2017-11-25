@@ -1,10 +1,13 @@
 #include"ListTest.h"
+#include<iostream>
+using namespace std;
 namespace HGSTL {
 	namespace ListTest {
 		void testCase1()
 		{
 			tsList<int> tslist1;
 			stdList<int> stdlist1;
+			
 			assert(stdlist1.size() == tslist1.size());
 			//test push_back()
 			for (int i = 0; i < 10; i++)
@@ -83,10 +86,12 @@ namespace HGSTL {
 			for (int i = 0; i < 10; i++)
 			{
 				tsTmp.push_back(i);
-				tsTmp.push_back(i);
+				stdTmp.push_back(i);
 			}
+			
 			tslist1.splice(it1, tsTmp);
 			stdlist1.splice(it2, stdTmp);
+			
 			assert(HGSTL::Test::container_equal(tslist1, stdlist1));
 
 			//test splice(iterator,list&,iterator)
@@ -97,12 +102,22 @@ namespace HGSTL {
 			assert(HGSTL::Test::container_equal(tslist1, stdlist1));
 
 			//test splice(iterator,list&,iterator,iterator)
-			it3 = it1 + 1;
-			it4 = it1 + 1;
-			auto it5 = ++it3;
-			auto it6 = ++it4;
-			tslist1.splice(it1, tslist1, it3, it5);
-			stdlist1.splice(it2, stdlist1,it4, it6);
+			tslist1.clear();
+			stdlist1.clear();
+			for (int i = 0; i < 10; i++)
+			{
+				tslist1.push_back(i);
+				stdlist1.push_back(i);
+			}
+			it1 = HGSTL::find(tslist1.begin(), tslist1.end(), 1);
+			it2 = std::find(stdlist1.begin(), stdlist1.end(), 1);
+			auto it1_2= HGSTL::find(tslist1.begin(), tslist1.end(), 3);
+			auto it2_2= std::find(stdlist1.begin(), stdlist1.end(), 3);
+			auto it1_3 = HGSTL::find(tslist1.begin(), tslist1.end(), 7);
+			auto it2_3 = std::find(stdlist1.begin(), stdlist1.end(), 7);
+			tslist1.splice(it1, tslist1, it1_2, it1_3);
+			stdlist1.splice(it2, stdlist1,it2_2, it2_3);
+			assert(HGSTL::Test::container_equal(tslist1, stdlist1));
 
 			//test merge()
 			tslist1.clear();
@@ -117,19 +132,22 @@ namespace HGSTL {
 			for (int i = 10; i < 20; i++)
 			{
 				tsTmp.push_back(i);
-				tsTmp.push_back(i);
+				stdTmp.push_back(i);
 			}
 			tslist1.merge(tsTmp);
 			stdlist1.merge(stdTmp);
 			assert(HGSTL::Test::container_equal(tslist1, stdlist1));
+			
 
 			//test reverse()
 			tslist1.reverse();
 			stdlist1.reverse();
 			assert(HGSTL::Test::container_equal(tslist1, stdlist1));
+			
 
 			//test sort()
 			tslist1.sort();
+			
 			stdlist1.sort();
 			assert(HGSTL::Test::container_equal(tslist1, stdlist1));
 
@@ -139,6 +157,7 @@ namespace HGSTL {
 			testCase1();
 			testCase2();
 			testCase3();
+			cout << "list OK" << endl;
 		}
 	}
 }

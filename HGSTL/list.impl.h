@@ -59,7 +59,7 @@ namespace HGSTL {
 		iterator last2 = x.end();
 
 		//注意：前提是，两个lists都已经过递增排序
-		while (first != last1&&first2 != last2)
+		while (first1 != last1&&first2 != last2)
 		{
 			if (*first2 < *first1)
 			{
@@ -93,26 +93,42 @@ namespace HGSTL {
 	template<class T,class Alloc>
 	void list<T, Alloc>::sort()
 	{
-		if (node->next == node || link_type(node->next)->next == node) return;
+		//if (node->next == node || link_type(node->next)->next == node) return;
 
-		//一些新的lists，作为中介数据存放区
-		list<T, Alloc> carry;
-		list<T, Alloc> counter[64];
-		int fill = 0;
-		while (!empty())
-		{
-			carry.splice(carry.begin(), *this, begin());
-			int i = 0;
-			while (i < fill && !counter[i].empty())
-			{
-				counter[i].merge(carry);
-				carry.swap(counter[i++]);
-			}
-			carry.swap(counter[i]);
-			if (i == fill) ++fill;
+		////一些新的lists，作为中介数据存放区
+		//list<T, Alloc> carry;
+		//list<T, Alloc> counter[64];
+		//int fill = 0;
+		//while (!empty())
+		//{
+		//	carry.splice(carry.begin(), *this, begin());
+		//	int i = 0;
+		//	while (i < fill && !counter[i].empty())
+		//	{
+		//		counter[i].merge(carry);
+		//		carry.swap(counter[i++]);
+		//	}
+		//	carry.swap(counter[i]);
+		//	if (i == fill) ++fill;
+		//}
+		//for (int i = 1; i < fill; i++)
+		//	counter[i].merge(counter[i - 1]);
+		//swap(counter[fill - 1]);
+
+		//这里使用的是插入排序
+		if (size() == 0 || size() == 1)
+			return;
+		list<T, Alloc> tmp;
+		iterator q = begin();
+		while (!empty()) {
+			iterator p = tmp.begin();
+			while (p != tmp.end() && *p < *q)
+				p++;
+			tmp.splice(p,*this, q);
+			q = begin();
 		}
-		for (int i = 1; i < fill; i++)
-			counter[i].merge(counter[i - 1]);
+		//将tmp赋给本list
+		swap(tmp);
 	}
 
 }
