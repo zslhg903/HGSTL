@@ -13,6 +13,7 @@ namespace HGSTL {
 		typedef value_type& reference;
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
+		typedef const reference const_reference;
 
 		typedef __deque_iterator<T, T&, T*, BufSize> iterator;
 
@@ -28,6 +29,10 @@ namespace HGSTL {
 		typedef simple_alloc<value_type, Alloc> data_allocator;
 		typedef simple_alloc<pointer, Alloc>	map_allocator;
 	public:
+		deque() :start(), finish(), map_size(0), map(0)
+		{
+			create_map_and_nodes(0);
+		}
 		deque(int n, const value_type& value) :start(), finish(), map(0), map_size(0)
 		{
 			fill_initialize(n, value);

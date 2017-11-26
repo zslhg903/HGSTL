@@ -81,6 +81,18 @@
     <ClInclude Include="ListTest.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="stack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StackTest.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="queue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="QueueTest.h">
+      <Filter>Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp">
@@ -96,6 +108,12 @@
       <Filter>Test</Filter>
     </ClCompile>
     <ClCompile Include="ListTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="StackTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="QueueTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
   </ItemGroup>

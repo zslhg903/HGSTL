@@ -160,6 +160,10 @@
     <ClInclude Include="listIterator.h" />
     <ClInclude Include="listNode.h" />
     <ClInclude Include="ListTest.h" />
+    <ClInclude Include="queue.h" />
+    <ClInclude Include="QueueTest.h" />
+    <ClInclude Include="stack.h" />
+    <ClInclude Include="StackTest.h" />
     <ClInclude Include="TestUtil.h" />
     <ClInclude Include="type_traits.h" />
     <ClInclude Include="uninitialized.h" />
@@ -172,6 +176,8 @@
     <ClCompile Include="DequeTest.cpp" />
     <ClCompile Include="ListTest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="QueueTest.cpp" />
+    <ClCompile Include="StackTest.cpp" />
     <ClCompile Include="VectorTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

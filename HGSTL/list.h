@@ -17,7 +17,7 @@ namespace HGSTL {
 		typedef value_type& reference;
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
-
+		typedef const reference const_reference;
 
 		typedef list_node* link_type;//½ÚµãÖ¸Õë
 		typedef __list_iterator<T, T&, T*>   iterator;
