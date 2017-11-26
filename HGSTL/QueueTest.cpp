@@ -16,7 +16,7 @@ namespace HGSTL {
 			assert(ts1.front() == std1.front());
 			assert(ts1.back() == std1.back());
 			for (int i = 0; i < 5; i++, ts1.pop(), std1.pop())
-			{\
+			{
 				assert(ts1.front() == std1.front());
 			}
 			
