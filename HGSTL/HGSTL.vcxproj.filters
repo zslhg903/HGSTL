@@ -99,6 +99,15 @@
     <ClInclude Include="PriorityQueueTest.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="slist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="slist.impl.h">
+      <Filter>impl</Filter>
+    </ClInclude>
+    <ClInclude Include="SlistTest.h">
+      <Filter>Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp">

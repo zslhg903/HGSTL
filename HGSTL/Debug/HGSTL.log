@@ -1,11 +1,3 @@
-﻿  HeapTest.cpp
-d:\hgstl\hgstl\hgstl\heaptest.cpp(12): warning C4018: “<”: 有符号/无符号不匹配
-d:\hgstl\hgstl\hgstl\heaptest.cpp(21): warning C4018: “<”: 有符号/无符号不匹配
-d:\hgstl\hgstl\hgstl\heaptest.cpp(30): warning C4018: “<”: 有符号/无符号不匹配
-d:\hgstl\hgstl\hgstl\heaptest.cpp(37): warning C4018: “<”: 有符号/无符号不匹配
-  正在生成代码...
-  正在编译...
-  main.cpp
-  正在生成代码...
+﻿  main.cpp
   HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.exe
   HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.pdb (Full PDB)

@@ -4,7 +4,7 @@ namespace HGSTL {
 		void testCase1()
 		{
 			int ia[9] = { 0,1,2,3,4,8,9,3,5 };
-			priority_queue<int> ipq1(ia, ia + 9);
+			HGSTL::priority_queue<int> ipq1(ia, ia + 9);
 			std::priority_queue<int> ipq2(ia, ia + 9);
 			assert(ipq1.size() == ipq2.size());
 

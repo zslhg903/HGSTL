@@ -164,6 +164,9 @@
     <ClInclude Include="PriorityQueueTest.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="QueueTest.h" />
+    <ClInclude Include="slist.h" />
+    <ClInclude Include="slist.impl.h" />
+    <ClInclude Include="SlistTest.h" />
     <ClInclude Include="stack.h" />
     <ClInclude Include="StackTest.h" />
     <ClInclude Include="TestUtil.h" />

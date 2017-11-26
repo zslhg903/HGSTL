@@ -6,6 +6,7 @@
 #include"QueueTest.h"
 #include"HeapTest.h"
 #include"PriorityQueueTest.h"
+#include"SlistTest.h"
 int main() {
 	HGSTL::VectorTest::testAllCases();
 	HGSTL::ListTest::testAllCases();
@@ -14,5 +15,6 @@ int main() {
 	HGSTL::QueueTest::testAllCases();
 	HGSTL::HeapTest::testAllCases();
 	HGSTL::PriorityQueueTest::testAllCases();
+	/*HGSTL::SlistTest::testAllCases();*/
 	system("pause");
 }
