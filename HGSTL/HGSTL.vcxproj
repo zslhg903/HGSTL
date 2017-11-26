@@ -154,12 +154,14 @@
     <ClInclude Include="deque.impl.h" />
     <ClInclude Include="dequeIterator.h" />
     <ClInclude Include="DequeTest.h" />
+    <ClInclude Include="HeapTest.h" />
     <ClInclude Include="iterator.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="list.impl.h" />
     <ClInclude Include="listIterator.h" />
     <ClInclude Include="listNode.h" />
     <ClInclude Include="ListTest.h" />
+    <ClInclude Include="PriorityQueueTest.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="QueueTest.h" />
     <ClInclude Include="stack.h" />
@@ -174,8 +176,10 @@
   <ItemGroup>
     <ClCompile Include="alloc.cpp" />
     <ClCompile Include="DequeTest.cpp" />
+    <ClCompile Include="HeapTest.cpp" />
     <ClCompile Include="ListTest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PriorityQueueTest.cpp" />
     <ClCompile Include="QueueTest.cpp" />
     <ClCompile Include="StackTest.cpp" />
     <ClCompile Include="VectorTest.cpp" />

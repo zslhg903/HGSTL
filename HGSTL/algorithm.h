@@ -8,6 +8,15 @@
 #include "iterator.h"
 #include "type_traits.h"
 namespace HGSTL {
+	//*****less******
+	template <class T>
+	struct less {
+		bool operator() (const T& x, const T& y) const { return x<y; }
+		typedef T first_argument_type;
+		typedef T second_argument_type;
+		typedef bool result_type;
+	};
+
 	//***** fill O(N)******
 	template<class ForwardIterator, class T>
 	void fill(ForwardIterator first, ForwardIterator last, const T& value) {
@@ -54,64 +63,72 @@ namespace HGSTL {
 	//	typename iterator_traits<InputIterator>::difference_type dist = 0;
 	//	while (first++ != last) {
 	//		++dist;
-	//	}
+//	}
 
-	//	return dist;
+//	return dist;
 
-	//}
+//}
 
-	//template<class RandomIterator>
-	//typename iterator_traits<RandomIterator>::difference_type
+//template<class RandomIterator>
+//typename iterator_traits<RandomIterator>::difference_type
 
-	//	_distance(RandomIterator first, RandomIterator last, random_access_iterator_tag) {
+//	_distance(RandomIterator first, RandomIterator last, random_access_iterator_tag) {
 
-	//	auto dist = last - first;
+//	auto dist = last - first;
 
-	//	return dist;
+//	return dist;
 
-	//}
+//}
 
-	//template<class Iterator>
-	//typename iterator_traits<Iterator>::difference_type
+//template<class Iterator>
+//typename iterator_traits<Iterator>::difference_type
 
-	//	distance(Iterator first, Iterator last) {
-	//	typedef typename iterator_traits<Iterator>::iterator_category iterator_category;
-	//	return _distance(first, last, iterator_category());
+//	distance(Iterator first, Iterator last) {
+//	typedef typename iterator_traits<Iterator>::iterator_category iterator_category;
+//	return _distance(first, last, iterator_category());
 
-	//}
+//}
 
 	//********** [push_heap] ******************************
 	template <class RandomAccessIterator, class Distance, class T>
-	inline void __push_heap(RandomAccessIterator first, Distance holeIndex, Distance topIndex, T value) {
+	inline void __push_heap(RandomAccessIterator first, Distance holeIndex, Distance topIndex, T value)
+	{
 		Distance parent = (holeIndex - 1) / 2;
-		while (holeIndex > topIndex && *(first + parent) < value) {
-			*(first + holeIndex) = *(first + parent);//父节点的值下降
-			holeIndex = parent;
+		while (holeIndex > topIndex && *(first + parent) < value)
+		{
+			//当尚未到达顶端，且父节点小于新值（于是不符合heap的次序特性）
+			//由于以上使用operator<,可知STL heap是一种max-heap(大者为父)。
+			*(first + holeIndex) = *(first + parent);//令洞值为父值
+			holeIndex = parent;		//	percolate up:调整洞号，向上提升至父节点
 			parent = (holeIndex - 1) / 2;  //找下一个父节点位置
-		}
-		*(first + holeIndex) = value; //
+		}	//持续至顶端，或满足heap的次序特性为止
+		*(first + holeIndex) = value; //令洞值为新值，完成插入操作
 	}
 
 	template <class RandomAccessIterator, class Distance, class T>
 	inline void __push_heap_aux(RandomAccessIterator first, RandomAccessIterator last,
-		Distance *, T*) {
+		Distance *, T*)
+	{
 		HGSTL::__push_heap(first, Distance((last - first) - 1), Distance(0), T(*(last - 1)));
 	}
 
 	template <class RandomAccessIterator>
-	inline void push_heap(RandomAccessIterator first, RandomAccessIterator last) {
+	inline void push_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
 		//新元素已经位于底部容器的最尾端
-		HGSTL::__push_heap_aux(first, last, difference_type(first), value_type(first));
+		HGSTL::__push_heap_aux(first, last, distance_type(first), value_type(first));
 	}
 
 	//********** [pop_heap] ******************************
 	//将最大值放到末尾
 	template <class RandomAccessIterator, class T, class Distance>
 	void __adjust_heap(RandomAccessIterator first, Distance holeIndex,
-		Distance len, T value) {
+		Distance len, T value)
+	{
 		Distance topIndex = holeIndex;
 		Distance secondChild = 2 * holeIndex + 2;
-		while (secondChild < len) {
+		while (secondChild < len)
+		{
 			//比较洞的左右孩子，然后以secondChild 代表较大节点
 			if (*(first + secondChild) < *(first + (secondChild - 1)))
 				secondChild--;
@@ -120,7 +137,8 @@ namespace HGSTL {
 			holeIndex = secondChild;
 			secondChild = 2 * (secondChild + 1);
 		}
-		if (secondChild == len) {//没有右节点只有左节点
+		if (secondChild == len)
+		{//没有右节点只有左节点
 			*(first + holeIndex) = *(first + (secondChild - 1));
 			holeIndex = secondChild - 1;
 		}
@@ -129,78 +147,57 @@ namespace HGSTL {
 
 	template <class RandomAccessIterator, class T, class Distance>
 	inline void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,
-		RandomAccessIterator result, T value, Distance*) {
+		RandomAccessIterator result, T value, Distance*)
+	{
 		*result = *first;
 		HGSTL::__adjust_heap(first, Distance(0), Distance(last - first), value);//value 暂时保存
 	}
 
 	template<class RandomAccessIterator, class T>
-	inline void __pop_heap_aux(RandomAccessIterator first, RandomAccessIterator last, T*) {
-		HGSTL::__pop_heap(first, last - 1, last - 1, T(*(last - 1)), difference_type(first));
+	inline void __pop_heap_aux(RandomAccessIterator first, RandomAccessIterator last, T*)
+	{
+		HGSTL::__pop_heap(first, last - 1, last - 1, T(*(last - 1)), distance_type(first));
 	}
 
 	template<class RandomAccessIterator>
-	inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last) {
+	inline void pop_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
 		HGSTL::__pop_heap_aux(first, last, value_type(first));
 	}
+	//********** [sort_heap] ******************************
+	template<class RandomAccessIterator>
+	void sort_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		while (last - first > 1)
+			HGSTL::pop_heap(first, last--);
+	}
 
-	//********** [pop_heap] ******************************
-	template<class RandomIterator, class T, class Distance>
-	void __make_heap(RandomIterator first,
-		RandomIterator last, T*, Distance*) {
+	//********** [make_heap] ******************************
+	template<class RandomAccessIterator>
+	inline void make_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		HGSTL::__make_heap(first, last, value_type(first), distance_type(first));
+	}
+
+	template<class RandomAccessIterator, class T, class Distance>
+	void __make_heap(RandomAccessIterator first,
+		RandomAccessIterator last, T*, Distance*)
+	{
 		if (last - first<2) return;
 		Distance len = last - first;
 		Distance parent = (len - 2) / 2;
-		while (true) {//调整整个树的所有父节点
+		while (true)
+		{//调整整个树的所有父节点
 			HGSTL::__adjust_heap(first, parent, len, T(*(first + parent)));
 			if (parent == 0) return;
 			parent--;
 		}
 	}
 
-	template<class RandomIterator>
-	inline void make_heap(RandomIterator first, RandomIterator last) {
-		HGSTL::__make_heap(first, last, value_type(first), difference_type(first));
-	}
 
 
-	//********** [advance] ******************************
-	//********* [Algorithm Complexity: O(N)] ****************
-	template<class InputIterator, class Distance>
-	void _advance(InputIterator& it, Distance n, input_iterator_tag) {
-		assert(n >= 0);
-		while (n--) {
-			++it;
-		}
-	}
-	template<class BidirectionIterator, class Distance>
-	void _advance(BidirectionIterator& it, Distance n, bidirectional_iterator_tag) {
-		if (n < 0) {
-			while (n++) {
-				--it;
-			}
-		}
-		else {
-			while (n--) {
-				++it;
-			}
-		}
-	}
-	template<class RandomIterator, class Distance>
-	void _advance(RandomIterator& it, Distance n, random_access_iterator_tag) {
-		if (n < 0) {
-			it -= (-n);
-		}
-		else {
-			it += n;
-		}
-	}
 
-	template <class InputIterator, class Distance>
-	void advance(InputIterator& it, Distance n) {
-		typedef typename iterator_traits<InputIterator>::iterator_category iterator_category;
-		_advance(it, n, iterator_category());
-	}
+
 
 	//********** [copy] ******************************
 

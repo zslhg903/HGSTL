@@ -93,6 +93,12 @@
     <ClInclude Include="QueueTest.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="HeapTest.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityQueueTest.h">
+      <Filter>Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc.cpp">
@@ -114,6 +120,12 @@
       <Filter>Test</Filter>
     </ClCompile>
     <ClCompile Include="QueueTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="PriorityQueueTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
   </ItemGroup>

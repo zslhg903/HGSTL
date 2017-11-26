@@ -124,7 +124,7 @@ namespace HGSTL {
 	{
 		return static_cast<typename iterator_traits<Iterator>::difference_type*>(0);
 	}
-	//distance
+	//********** [distance] ******************************
 	template<class InputIterator>
 	inline typename iterator_traits<InputIterator>::difference_type
 		distance(InputIterator first, InputIterator last)
@@ -151,6 +151,36 @@ namespace HGSTL {
 	{
 		return last - first;
 	}
+
+	//********** [advance] ******************************
+	//********* [Algorithm Complexity: O(N)] ****************
+
+	template <class InputIterator, class Distance>
+	void advance(InputIterator& i, Distance n)
+	{
+		__advance(i, n, iterator_category(i));
+	}
+
+	template<class InputIterator, class Distance>
+	void __advance(InputIterator& i, Distance n, input_iterator_tag)
+	{
+		while (n--) ++i;
+	}
+	template<class BidirectionIterator, class Distance>
+	void __advance(BidirectionIterator& i, Distance n, bidirectional_iterator_tag) 
+	{
+		if (n >= 0)
+			while (n--) ++i;
+		else
+			while (n++) --i;
+	}
+	template<class RandomIterator, class Distance>
+	void __advance(RandomIterator& i, Distance n, random_access_iterator_tag)
+	{
+		i += n;
+	}
+
+	
 }
 #endif // !_ITERATOR_H_
 

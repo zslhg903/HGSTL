@@ -1,14 +1,11 @@
-﻿  QueueTest.cpp
-d:\hgstl\hgstl\hgstl\algorithm.h(355): warning C4018: “>”: 有符号/无符号不匹配
-  d:\hgstl\hgstl\hgstl\deque.impl.h(21): note: 参见对正在编译的函数 模板 实例化“T1 HGSTL::max<int,HGSTL::deque<int,HGSTL::alloc,0>::std::size_type>(T1,std::T2)”的引用
-          with
-          [
-              T1=int,
-              T2=HGSTL::deque<int,HGSTL::alloc,0>::std::size_type
-          ]
-  d:\hgstl\hgstl\hgstl\deque.impl.h(18): note: 编译类 模板 成员函数“void HGSTL::deque<int,HGSTL::alloc,0>::create_map_and_nodes(HGSTL::deque<int,HGSTL::alloc,0>::std::size_type)”时
-  d:\hgstl\hgstl\hgstl\deque.h(34): note: 参见对正在编译的函数 模板 实例化“void HGSTL::deque<int,HGSTL::alloc,0>::create_map_and_nodes(HGSTL::deque<int,HGSTL::alloc,0>::std::size_type)”的引用
-  d:\hgstl\hgstl\hgstl\queue.h(11): note: 参见对正在编译的类 模板 实例化“HGSTL::deque<int,HGSTL::alloc,0>”的引用
-  d:\hgstl\hgstl\hgstl\queuetest.cpp(29): note: 参见对正在编译的类 模板 实例化“HGSTL::queue<int,HGSTL::deque<int,HGSTL::alloc,0>>”的引用
+﻿  HeapTest.cpp
+d:\hgstl\hgstl\hgstl\heaptest.cpp(12): warning C4018: “<”: 有符号/无符号不匹配
+d:\hgstl\hgstl\hgstl\heaptest.cpp(21): warning C4018: “<”: 有符号/无符号不匹配
+d:\hgstl\hgstl\hgstl\heaptest.cpp(30): warning C4018: “<”: 有符号/无符号不匹配
+d:\hgstl\hgstl\hgstl\heaptest.cpp(37): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
+  正在编译...
+  main.cpp
+  正在生成代码...
   HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.exe
   HGSTL.vcxproj -> D:\HGSTL\HGSTL\Debug\HGSTL.pdb (Full PDB)

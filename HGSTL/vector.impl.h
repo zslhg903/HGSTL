@@ -1,6 +1,34 @@
 #ifndef _VECTOR_IMPL_H_
 #define	_VECTOR_IMPL_H_
+#include"type_traits.h"
 namespace HGSTL {
+	template<class T, class Alloc>
+	template<class InputIterator>
+	vector<T, Alloc>::vector(InputIterator first, InputIterator last)
+	{
+		vector_aux(first, last, typename std::is_pointer<InputIterator>::type());//判断是否InputIterator是指针类型
+	}
+
+	template<class T, class Alloc>
+	template<class InputIterator>
+	void vector<T, Alloc>::vector_aux(InputIterator first, InputIterator last, std::true_type) //指针类型
+	{
+		allocateAndCopy(first, last);
+	}
+	template<class T, class Alloc>
+	template<class Integer>
+	void vector<T, Alloc>::vector_aux(Integer n, const value_type& value, std::false_type) //非指针类型
+	{
+		fill_initialize(n, value);
+	}
+	template<class T, class Alloc>
+	template<class InputIterator>
+	void vector<T, Alloc>::allocateAndCopy(InputIterator first, InputIterator last) 
+	{
+		start = data_allocator::allocate(last - first);
+		finish = HGSTL::uninitialized_copy(first, last, start);
+		end_of_storage = finish;
+	}
 	template<class T,class Alloc>
 	void vector<T,Alloc>::insert_aux(iterator position, const T& x)
 	{

@@ -17,6 +17,7 @@ namespace HGSTL {
 		typedef value_type& reference;
 		typedef size_t		size_type;
 		typedef ptrdiff_t	difference_type;
+		typedef const reference const_reference;
 	protected:
 		typedef simple_alloc<value_type, Alloc> data_allocator;
 		iterator start;
@@ -24,9 +25,13 @@ namespace HGSTL {
 		iterator end_of_storage;
 
 		void insert_aux(iterator position, const T& x);
-		
-		
-	
+		template<class InputIterator>
+		void vector_aux(InputIterator first, InputIterator last, std::true_type);
+		template<class Integer>
+		void vector_aux(Integer n, const value_type& value, std::false_type);
+		template<class InputIterator>
+		void allocateAndCopy(InputIterator first, InputIterator last);
+
 		void deallocate() 
 		{
 			if (start)
@@ -70,6 +75,9 @@ namespace HGSTL {
 		vector(size_type n, const T& value) { fill_initialize(n, value); }
 		vector(int n, const T& value) { fill_initialize(n, value); }
 		vector(long n, const T& value) { fill_initialize(n, value); }
+
+		template<class InputIterator>
+		vector(InputIterator first, InputIterator last);
 		explicit vector(size_type n) { fill_initialize(n, T()); }
 
 		~vector() 
