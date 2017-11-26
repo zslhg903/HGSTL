@@ -157,7 +157,7 @@ namespace HGSTL {
 			testCase1();
 			testCase2();
 			testCase3();
-			cout << "list OK" << endl;
+			cout << "ListTest is OK" << endl;
 		}
 	}
 }

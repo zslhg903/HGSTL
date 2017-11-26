@@ -4,7 +4,6 @@
 #include<type_traits>
 #include<iostream>
 #include<initializer_list>
-
 #include"allocator.h"
 #include"algorithm.h"
 #include"uninitialized.h"
@@ -26,7 +25,7 @@ namespace HGSTL {
 
 		void insert_aux(iterator position, const T& x);
 		
-		void insert(iterator position, size_type n, const T& x);
+		
 	
 		void deallocate() 
 		{
@@ -40,12 +39,14 @@ namespace HGSTL {
 			end_of_storage = finish;
 		}
 	public:
+		void insert(iterator position, size_type n, const T& x);
 		iterator begin() const { return start; }
 		iterator end() const{ return finish; }
 		size_type size() const { return size_type(finish - start); }
 		size_type capacity() const { return size_type(end_of_storage - start); }
 		bool empty() const {return begin() == end();}
 		reference operator[](size_type n) { return *(begin() + n); }
+
 		bool operator==(const vector& other) const 
 		{
 			if (size() != other.size()) return false;

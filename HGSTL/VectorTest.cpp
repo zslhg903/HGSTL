@@ -1,45 +1,10 @@
 #include"VectorTest.h"
 namespace HGSTL {
 	namespace VectorTest {
-		//ππ‘Ï∫Ø ˝≤‚ ‘
-		void testCase1() {
-			stdVec<std::string> v1(10, "zxh");
-			tsVec<std::string> v2(10, "zxh");
-			assert(HGSTL::Test::container_equal(v1, v2));
-
-			stdVec<std::string> v3(10);
-			tsVec<std::string> v4(10);
-			assert(HGSTL::Test::container_equal(v3, v4));
-
-			/*std::array<std::string, 3> arr = { "abc", "def", "ghi" };
-			stdVec<std::string> v5(std::begin(arr), std::end(arr));
-			tsVec<std::string> v6(std::begin(arr), std::end(arr));
-			assert(HGSTL::Test::container_equal(v5, v6));*/
-
-		}
-		void testCase2() {
-			stdVec<int> temp1(10, 1);
-			tsVec<int> temp2(10, 1);
-
-			auto v1(temp1);
-			auto v2(temp2);
-			
-			assert(HGSTL::Test::container_equal(v1, v2));
-
-			auto v3(std::move(temp1));
-			auto v4(std::move(temp2));
-			assert(HGSTL::Test::container_equal(v3, v4));
-
-			auto v5 = v1;
-			auto v6 = v2;
-			assert(HGSTL::Test::container_equal(v5, v6));
-
-			auto v7 = std::move(v3);
-			auto v8 = std::move(v4);
-			assert(HGSTL::Test::container_equal(v7, v8));
-		}
+		
+	
 		//≤‚ ‘push_back
-		void testCase3() {
+		void testCase1() {
 			tsVec<int> v1, v2;
 			for (int i = 0; i != 100; ++i) {
 				v1.push_back(i);
@@ -48,7 +13,7 @@ namespace HGSTL {
 			assert(v1 == v2);
 			assert(!(v1 != v2));
 		}
-		void testCase4() {
+		void testCase2() {
 			tsVec<int> myvector;
 			for (int i = 1; i <= 5; i++) myvector.push_back(i);
 
@@ -60,7 +25,7 @@ namespace HGSTL {
 			i = 1;
 			
 		}
-		void testCase5() {
+		void testCase3() {
 			tsVec<int> myvector(5);  
 			int i = 0;
 			for (int j = 0; j < myvector.size(); j++)
@@ -72,17 +37,66 @@ namespace HGSTL {
 				assert(*it == i++);
 			}
 		}
-		void testCase6() {
+		void testCase4() {
+			//test resize(size_type new_size)
 			tsVec<int> v(11, 0);
 			assert(v.size() == 11);
-
 			v.resize(5);
 			assert(v.size() == 5);
-
-			v.resize(20);
-			assert(v.size() == 20);
+			
 		}
 		
+		void testCase5()
+		{
+			tsVec<int> tsV1(10, 1);
+			stdVec<int> stdV1(10, 1);
+			//test size()
+			assert(tsV1.size() == stdV1.size());
+			assert(HGSTL::Test::container_equal(tsV1, stdV1));
+
+			//test push_back()
+			for (int i = 0; i < 10; i++)
+			{
+				tsV1.push_back(i);
+				stdV1.push_back(i);
+			}
+			assert(HGSTL::Test::container_equal(tsV1, stdV1));
+
+			//test front()  back()
+			assert(tsV1.front() == stdV1.front());
+			assert(tsV1.back() == stdV1.back());
+
+			//test pop_back()
+			tsV1.pop_back();
+			stdV1.pop_back();
+			assert(HGSTL::Test::container_equal(tsV1, stdV1));
+
+			//test erase(iterator)
+			auto it1 = HGSTL::find(tsV1.begin(), tsV1.end(), 2);
+			auto it2 = std::find(stdV1.begin(), stdV1.end(), 2);
+			it1=tsV1.erase(it1);
+			it2=stdV1.erase(it2);
+			assert(HGSTL::Test::container_equal(tsV1, stdV1));
+
+			//test erase(iterator first, iterator last) 
+			auto it1_2 = it1 + 2;
+			auto it2_2 = it2 + 2;
+			it1 = tsV1.erase(it1, it1_2);
+			it2 = stdV1.erase(it2, it2_2);
+			assert(HGSTL::Test::container_equal(tsV1, stdV1));
+
+			//test insert(iterator position, size_type n, const T& x)
+			tsV1.insert(it1, 10, 111);
+			stdV1.insert(it2, 10, 111);
+			assert(HGSTL::Test::container_equal(tsV1, stdV1));
+
+			//test resize(size_type new_size, const T& x) 
+			tsV1.resize(10, 10);
+			stdV1.resize(10, 10);
+			assert(HGSTL::Test::container_equal(tsV1, stdV1));
+
+
+		}
 
 		void testAllCases() {
 			testCase1();
@@ -90,8 +104,7 @@ namespace HGSTL {
 			testCase3();
 			testCase4();
 			testCase5();
-			testCase6();
-			std::cout << "vector OK" << std::endl;
+			std::cout << "VectorTest is OK" << std::endl;
 			
 		}
 	}
